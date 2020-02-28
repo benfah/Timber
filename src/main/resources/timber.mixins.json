@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "me.benfah.timber.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "AxeItemMixin",
+    "BlockMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

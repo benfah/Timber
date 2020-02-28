@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "timber",
+  "version": "${version}",
+
+  "name": "Timber",
+  "description": "Chop down trees with just one hit!",
+  "authors": [
+    "benfah"
+  ],
+
+  "license": "CC0-1.0",
+  "icon": "assets/modid/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "me.benfah.timber.TimberMod"
+    ]
+  },
+  "mixins": [
+    "timber.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.15.x"
+  },
+  "suggests": {
+    "flamingo": "*"
+  }
+}
