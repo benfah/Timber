@@ -28,7 +28,7 @@ public class BlockMixin {
 		
 		float logModifier = 1.0F;
 		
-		if(BlockTags.LOGS.contains(state.getBlock()) && !player.isSneaking() && Config.getBoolean("options", "slowerChopping", true))
+		if(LogUtils.isLog(state.getBlock()) && !player.isSneaking() && Config.getBoolean("options", "slowerChopping", true))
 		{
 			ArrayList<BlockPos> list = new ArrayList<>();
 			boolean hasLeaves = LogUtils.getLogPositions(pos, list, player.world, state.getBlock(), true);

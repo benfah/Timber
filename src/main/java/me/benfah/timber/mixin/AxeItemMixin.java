@@ -25,8 +25,7 @@ public class AxeItemMixin extends MiningToolItem {
 	
 	public boolean postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
 		
-		System.out.println("hi");
-		if (BlockTags.LOGS.contains(state.getBlock()) && !miner.isSneaking()) {
+		if (LogUtils.isLog(state.getBlock()) && !miner.isSneaking()) {
 			List<BlockPos> logPositions = new ArrayList<>();
 			boolean hasLeaves = LogUtils.getLogPositions(pos, logPositions, world, state.getBlock(), true);
 			int maxLogs = Math.min(stack.getMaxDamage() - stack.getDamage(), logPositions.size());

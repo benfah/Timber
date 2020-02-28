@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -40,7 +41,7 @@ public class LogUtils {
 					
 					BlockPos newPos = new BlockPos(x, y, z);
 					
-					if(BlockTags.LEAVES.contains(world.getBlockState(newPos).getBlock()) && !hasLeaves)
+					if(areLeaves(world.getBlockState(newPos).getBlock()) && !hasLeaves)
 					hasLeaves = true;
 					
 					if (world.getBlockState(newPos).getBlock().equals(block) && !list.contains(newPos)) {
@@ -59,6 +60,16 @@ public class LogUtils {
 		TREE_MAP.put(pos, new BlockPosList(list, world.getTime(), hasLeaves));
 		return hasLeaves;
 
+	}
+	
+	public static boolean isLog(Block b)
+	{
+		return BlockTags.LOGS.contains(b) || Blocks.WARPED_STEM.equals(b) || Blocks.CRIMSON_STEM.equals(b) || Blocks.SHROOMLIGHT.equals(b);
+	}
+	
+	public static boolean areLeaves(Block b)
+	{
+		return BlockTags.LEAVES.contains(b) || BlockTags.WART_BLOCKS.contains(b);
 	}
 	
 }
