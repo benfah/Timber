@@ -2,7 +2,6 @@ package me.benfah.timber.mixin;
 
 import java.util.ArrayList;
 
-import org.apache.logging.log4j.core.config.plugins.util.ResolverUtil.Test;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -13,8 +12,6 @@ import me.benfah.timber.utils.LogUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.MiningToolItem;
-import net.minecraft.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 
@@ -31,16 +28,14 @@ public class BlockMixin {
 
 		if (LogUtils.isLog(state.getBlock()) && !player.isSneaking()
 				&& Config.getBoolean("options", "slowerChopping", true)
-				&& player.getMainHandStack().getItem() instanceof MiningToolItem) {
-			MiningToolItem toolItem = (MiningToolItem) player.getMainHandStack().getItem();
+				&& player.getMainHandStack().getItem().getMiningSpeed(player.getMainHandStack(), state) > 1F) {
 
-			if (toolItem.getMiningSpeed(player.getMainHandStack(), state) > 1F) {
-				ArrayList<BlockPos> list = new ArrayList<>();
-				boolean hasLeaves = LogUtils.getLogPositions(pos, list, player.world, state.getBlock(), true);
+			ArrayList<BlockPos> list = new ArrayList<>();
+			boolean hasLeaves = LogUtils.getLogPositions(pos, list, player.world, state.getBlock(), true);
 
-				if (hasLeaves)
-					logModifier = Math.min(list.size(), 40);
-			}
+			if (hasLeaves)
+				logModifier = Math.min(list.size(), 40);
+
 		}
 		info.setReturnValue(player.getBlockBreakingSpeed(state) / f / (float) i / logModifier);
 	}
