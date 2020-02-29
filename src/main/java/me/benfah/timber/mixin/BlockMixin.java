@@ -13,31 +13,34 @@ import me.benfah.timber.utils.LogUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.MiningToolItem;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 
 @Mixin(Block.class)
 public class BlockMixin {
-	
+
 	@Inject(method = "calcBlockBreakingDelta", at = @At(value = "RETURN", ordinal = 1), cancellable = true)
-	public void onCalcBlock(BlockState state, PlayerEntity player, BlockView world, BlockPos pos, CallbackInfoReturnable<Float> info)
-	{
+	public void onCalcBlock(BlockState state, PlayerEntity player, BlockView world, BlockPos pos,
+			CallbackInfoReturnable<Float> info) {
 		float f = state.getHardness(world, pos);
 		int i = player.isUsingEffectiveTool(state) ? 30 : 100;
-		
+
 		float logModifier = 1.0F;
-		
-		if(BlockTags.LOGS.contains(state.getBlock()) && !player.isSneaking() && Config.getBoolean("options", "slowerChopping", true))
-		{
+
+		if (BlockTags.LOGS.contains(state.getBlock()) && !player.isSneaking()
+				&& Config.getBoolean("options", "slowerChopping", true)
+				&& player.getMainHandStack().getItem().getMiningSpeed(player.getMainHandStack(), state) > 1F) {
+			
+			
 			ArrayList<BlockPos> list = new ArrayList<>();
 			boolean hasLeaves = LogUtils.getLogPositions(pos, list, player.world, state.getBlock(), true);
-			
-			if(hasLeaves)
-			logModifier = Math.min(list.size(), 40);
+
+			if (hasLeaves)
+				logModifier = Math.min(list.size(), 40);
 		}
-		info.setReturnValue(player.getBlockBreakingSpeed(state) / f / (float)i / logModifier);
+		info.setReturnValue(player.getBlockBreakingSpeed(state) / f / (float) i / logModifier);
 	}
-	
-	
+
 }
