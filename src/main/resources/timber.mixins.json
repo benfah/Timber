@@ -5,7 +5,7 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "AxeItemMixin",
-    "AbstractBlockMixin"
+    "BlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1
