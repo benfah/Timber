@@ -31,7 +31,7 @@ public class BlockMixin {
 
 		if (BlockTags.LOGS.contains(state.getBlock()) && !player.isSneaking()
 				&& Config.getBoolean("options", "slowerChopping", true)
-				&& player.getMainHandStack().getItem().getMiningSpeed(player.getMainHandStack(), state) > 1F) {
+				&& player.getMainHandStack().getItem().getMiningSpeedMultiplier(player.getMainHandStack(), state) > 1F) {
 			
 			
 			ArrayList<BlockPos> list = new ArrayList<>();
